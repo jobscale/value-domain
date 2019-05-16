@@ -1,0 +1,5 @@
+.env.js
+.idea/
+.c9/
+package-lock.json
+node_modules/
