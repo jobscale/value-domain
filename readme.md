@@ -2,11 +2,11 @@
 ### startup
 
 ```bash
-echo 'module.exports = {
+echo "module.exports = {
   domain: 'example.com',
   token: 'secret',
   hosts: ['@', '*'],
-};' > app/.env.js
+};" > app/.env.js
 npm i
 npm run lint
 npm start
