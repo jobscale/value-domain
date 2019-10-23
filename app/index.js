@@ -1,10 +1,11 @@
 const { spawn } = require('child_process');
-const env = require('./env');
 global.fetch = require('node-fetch');
+const env = require('./env');
+const net = require('./net');
 
 global.logger = console;
 const ip = process.argv[2];
-logger.log({ ip });
+logger.log({ net, ip, process.argv });
 const app = {
   url: 'https://dyn.value-domain.com/cgi-bin/dyn.fcg',
   headers: {
@@ -21,6 +22,7 @@ const app = {
     'upgrade-insecure-requests': '1',
   },
   getAddress() {
+    if (net.ip) return Promise.resolve(net.ip);
     if (ip) return Promise.resolve(ip);
     return new Promise((resolve, reject) => {
       const proc = spawn('curl', ['ifconfig.io'], { shell: true });
