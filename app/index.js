@@ -22,7 +22,8 @@ const app = {
     return new Promise((resolve, reject) => {
       const proc = spawn('curl', ['ifconfig.io'], { shell: true });
       proc.stdout.on('data', data => resolve(data.toString()));
-      proc.on('close', code => code ? reject(new Error('NG')) : resolve('OK'));
+      const close = code => code ? reject(new Error('NG')) : resolve('OK');
+      proc.on('close', code => setTimeout(close, 1000, code));
     });
   },
   async setAddress(ip) {
