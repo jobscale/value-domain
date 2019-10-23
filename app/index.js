@@ -21,9 +21,14 @@ const app = {
     'cache-control': 'max-age=0',
     'upgrade-insecure-requests': '1',
   },
+  fetchIP() {
+    return fetch('http://ifconfig.io/ip')
+    .then(res => res.text());
+  },
   getAddress() {
     if (net.ip) return Promise.resolve(net.ip);
     if (ip) return Promise.resolve(ip);
+    if (this.fetchIP) return this.fetchIP();
     return new Promise((resolve, reject) => {
       const proc = spawn('curl', ['ifconfig.io'], { shell: true });
       proc.stdout.on('data', data => resolve(data.toString()));
