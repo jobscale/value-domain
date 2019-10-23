@@ -4,7 +4,7 @@ const env = require('./env');
 
 global.logger = console;
 const net = { ip: process.argv[2] };
-logger.log({ net, process.argv });
+logger.log(net, process.argv);
 const app = {
   url: 'https://dyn.value-domain.com/cgi-bin/dyn.fcg',
   headers: {
