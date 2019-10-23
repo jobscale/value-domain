@@ -23,3 +23,9 @@ main() {
   docker run --name value-domain --rm -it local/value-domain:0.0.1
 } && main
 ```
+
+### create cronjob
+```
+kubectl create cronjob value-domain --image local/value-domain:0.0.1 --schedule '0/7 * * * *'
+kubectl create job --from=cronjob/value-domain value-domain-manual-$(date +'%Y%m%d-%H%M')
+```
