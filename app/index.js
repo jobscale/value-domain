@@ -1,11 +1,10 @@
 const { spawn } = require('child_process');
 global.fetch = require('node-fetch');
 const env = require('./env');
-const net = require('./net');
 
 global.logger = console;
-const ip = process.argv[2];
-logger.log({ net, ip, process.argv });
+const net = { ip: process.argv[2] };
+logger.log({ net, process.argv });
 const app = {
   url: 'https://dyn.value-domain.com/cgi-bin/dyn.fcg',
   headers: {
@@ -27,7 +26,6 @@ const app = {
   },
   getAddress() {
     if (net.ip) return Promise.resolve(net.ip);
-    if (ip) return Promise.resolve(ip);
     if (this.fetchIP) return this.fetchIP();
     return new Promise((resolve, reject) => {
       const proc = spawn('curl', ['ifconfig.io'], { shell: true });
