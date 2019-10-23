@@ -3,6 +3,8 @@ const env = require('./env');
 global.fetch = require('node-fetch');
 
 global.logger = console;
+const ip = process.argv[2];
+logger.log({ ip });
 const app = {
   url: 'https://dyn.value-domain.com/cgi-bin/dyn.fcg',
   headers: {
@@ -19,11 +21,12 @@ const app = {
     'upgrade-insecure-requests': '1',
   },
   getAddress() {
+    if (ip) return Promise.resolve(ip);
     return new Promise((resolve, reject) => {
       const proc = spawn('curl', ['ifconfig.io'], { shell: true });
       proc.stdout.on('data', data => resolve(data.toString()));
       const close = code => code ? reject(new Error('NG')) : resolve('OK');
-      proc.on('close', code => setTimeout(close, 1000, code));
+      proc.on('close', code => setTimeout(close, 0, code));
     });
   },
   async setAddress(ip) {
