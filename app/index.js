@@ -7,7 +7,7 @@ const app = {
   headers: {
   },
   fetchIP() {
-    return fetch('http://ifconfig.io/ip')
+    return fetch('http://inet-ip.info/ip')
     .then(res => res.text())
     .then(res => res.split('\n')[0]);
   },

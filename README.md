@@ -20,7 +20,7 @@ npm start
 ```
 main() {
   docker build . -t local/value-domain:0.0.1
-  docker run --name value-domain --rm -it local/value-domain:0.0.1
+  docker run --name value-domain --rm -it local/value-domain:0.0.1 bash -c ". .nvm/nvm.sh && npm start"
 } && main
 ```
 
