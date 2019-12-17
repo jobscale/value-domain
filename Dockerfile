@@ -1,4 +1,5 @@
 FROM node
+SHELL ["bash", "-c"]
 WORKDIR /home/node
 USER node
 COPY package.json package.json
