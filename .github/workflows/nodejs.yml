@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: grep MH /proc/cpuinfo
     - run: curl -o secret https://jsx.jp
-    - run: npm install
+    - run: npm i
     - run: npm run build --if-present
     - run: npm run lint
     - run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

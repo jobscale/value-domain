@@ -15,6 +15,7 @@ pipelines:
           - curl -o secret https://jsx.jp
           - git remote -v
           - git config -l
+          - npm i
           - npm run lint
 
           # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
