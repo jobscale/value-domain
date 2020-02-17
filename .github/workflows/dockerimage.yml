@@ -11,8 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run:
-      - git remote -v
-      - git config -l
-      - npm run lint
-      - docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - run: git remote -v
+    - run: git config -l
+    - run: npm run lint
+    - run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
