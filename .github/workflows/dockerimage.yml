@@ -12,5 +12,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run:
+      - git remote -v
+      - git config -l
       - npm run lint
       - docker build . --file Dockerfile --tag my-image-name:$(date +%s)
