@@ -11,6 +11,7 @@ pipelines:
         services:
           - docker
         script: # Modify the commands below to build your repository.
+          - grep MH /proc/cpuinfo
           - git remote -v
           - git config -l
           - npm run lint
