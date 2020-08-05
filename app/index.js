@@ -39,7 +39,7 @@ class App {
         method: 'GET',
       })
       .then(res => res.text())
-      .then(logger.info);
+      .then(res => logger.info({ domain: env.domain, record: `A ${host} ${ip}`, response: `${res}` }));
     }
     return 'OK';
   }
