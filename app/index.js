@@ -39,7 +39,8 @@ class App {
         method: 'GET',
       })
       .then(res => res.text())
-      .then(res => logger.info({ domain: env.domain, record: `A ${host} ${ip}`, response: `${res}` }));
+      .then(res => ({ updated: `${host}.${env.domain} - ${ip}`, res: res.replace(/[\s]+/g, ' ') }))
+      .then((res) => logger.info(JSON.stringify(res)));
     }
     return 'OK';
   }
