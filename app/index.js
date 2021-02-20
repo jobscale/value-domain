@@ -1,6 +1,7 @@
 global.fetch = require('node-fetch');
-
 global.logger = console;
+const Cookie: = 'X-AUTH=X0X0X0X0X0X0X0X'
+const Host = 'https://partner.credentials.svc.cluster.local'
 
 class App {
   constructor() {
@@ -10,9 +11,9 @@ class App {
   fetchEnv() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
     const pattern = [/=/g, '', 'base64'];
-    return fetch('https://partner/env.json', {
+    return fetch(`${Host}/env.json`, {
       method: 'GET',
-      headers: { Cookie: 'X-AUTH=X0X0X0X0X0X0X0X' },
+      headers: { Cookie },
     })
     .then(res => res.json())
     .then(res => JSON.parse(
