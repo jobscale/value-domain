@@ -1,7 +1,8 @@
 global.fetch = require('node-fetch');
+
 global.logger = console;
-const Cookie: = 'X-AUTH=X0X0X0X0X0X0X0X'
-const Host = 'https://partner.credentials.svc.cluster.local'
+const Cookie = 'X-AUTH=X0X0X0X0X0X0X0X';
+const Host = 'https://partner.credentials.svc.cluster.local';
 
 class App {
   constructor() {

@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: grep MH /proc/cpuinfo
-    - run: curl -o secret https://jsx.jp
+    - run: dig jsx.jp
     - run: npm i
     - run: npm run build --if-present
     - run: npm run lint
