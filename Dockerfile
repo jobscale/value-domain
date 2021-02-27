@@ -1,4 +1,4 @@
-FROM node
+FROM node:buster-slim
 SHELL ["bash", "-c"]
 WORKDIR /home/node
 COPY package.json package.json

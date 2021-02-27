@@ -42,7 +42,7 @@ class App {
       })
       .then(res => res.text())
       .then(res => ({ updated: `${host}.${env.domain} - ${ip} - ${res.replace(/[\s]+/g, ' ').trim()}` }))
-      .then((res) => logger.info(JSON.stringify(res)));
+      .then(res => logger.info(JSON.stringify(res)));
     }
     return 'OK';
   }
@@ -54,7 +54,7 @@ class App {
 
   start() {
     this.main()
-    .catch(e => logger.error({ e }));
+    .catch(e => logger.error({ message: e.toString() }));
   }
 }
 
