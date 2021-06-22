@@ -23,7 +23,7 @@ class App {
   }
 
   fetchIP() {
-    return fetch('http://inet-ip.info/ip')
+    return fetch('https://inet-ip.info/ip')
     .then(res => res.text())
     .then(res => res.split('\n')[0]);
   }
