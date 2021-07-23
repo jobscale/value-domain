@@ -10,7 +10,7 @@ class App {
   }
 
   fetchEnv() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const pattern = [/=/g, '', 'base64'];
     return fetch(`${Host}/env.json`, {
       method: 'GET',
