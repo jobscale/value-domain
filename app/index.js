@@ -35,14 +35,23 @@ class App {
     ]);
   }
 
+  waiter(milliseconds) {
+    const prom = {};
+    prom.pending = new Promise((...args) => [prom.resolve, prom.reject] = args);
+    setTimeout(prom.resolve, milliseconds);
+    return prom;
+  }
+
   async setAddress(ip, env) {
+    logger.info('Dynamic DNS polling.');
     for (const host of env.hosts) {
-      await fetch(`${this.url}?d=${env.domain}&p=${env.token}&h=${host}&i=${ip}`, {
-        method: 'GET',
-      })
+      await this.waiter(1200)
+      .then(() => `${this.url}?d=${env.domain}&p=${env.token}&h=${host}&i=${ip}`)
+      .then(url => fetch(url, { method: 'GET' }))
       .then(res => res.text())
       .then(res => ({ updated: `${host}.${env.domain} - ${ip} - ${res.replace(/[\s]+/g, ' ').trim()}` }))
-      .then(res => logger.info(JSON.stringify(res)));
+      .then(res => logger.info(JSON.stringify(res)))
+      .catch(e => logger.error({ message: e.toString() }));
     }
     return 'OK';
   }
