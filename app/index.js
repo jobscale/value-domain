@@ -39,21 +39,32 @@ class App {
     const prom = {};
     prom.pending = new Promise((...args) => [prom.resolve, prom.reject] = args);
     setTimeout(prom.resolve, milliseconds);
-    return prom;
+    return prom.pending;
   }
 
   async setAddress(ip, env) {
     logger.info('Dynamic DNS polling.');
+    const { domain, token } = env;
     for (const host of env.hosts) {
+      const params = { domain, token, host, ip, retry: 10 };
       await this.waiter(1200)
-      .then(() => `${this.url}?d=${env.domain}&p=${env.token}&h=${host}&i=${ip}`)
-      .then(url => fetch(url, { method: 'GET' }))
-      .then(res => res.text())
-      .then(res => ({ updated: `${host}.${env.domain} - ${ip} - ${res.replace(/[\s]+/g, ' ').trim()}` }))
-      .then(res => logger.info(JSON.stringify(res)))
+      .then(() => this.dynamic(params))
       .catch(e => logger.error({ message: e.toString() }));
     }
     return 'OK';
+  }
+
+  dynamic({ domain, token, host, ip, retry }) {
+    const url = `${this.url}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
+    return fetch(url, { method: 'GET' })
+    .then(res => res.text())
+    .then(res => res.replace(/[\s]+/g, ' ').trim())
+    .then(status => ({ updated: `${host}.${domain} - ${ip}`, status }))
+    .then(res => {
+      logger.info(JSON.stringify(res));
+      if (res.status === 'status=0 OK' || !retry) return res;
+      return this.dynamic({ domain, token, host, ip, retry: retry - 1 });
+    });
   }
 
   main() {

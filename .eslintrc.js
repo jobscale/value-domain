@@ -16,6 +16,10 @@ module.exports = {
   },
   rules: {
     indent: ['error', 2, { MemberExpression: 0 }],
+    'object-curly-newline': ['error', {
+      ObjectExpression: { minProperties: 6, multiline: true, consistent: true },
+      ObjectPattern: { minProperties: 6, multiline: true, consistent: true },
+    }],
     'arrow-parens': 'off',
     'no-return-assign': 'off',
     'no-plusplus': 'off',
