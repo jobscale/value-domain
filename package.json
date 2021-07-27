@@ -11,7 +11,9 @@
     "lint:fix": "date +%s && eslint . --fix",
     "test": "npm run lint"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "node-fetch": "^2.6.1"
   },
