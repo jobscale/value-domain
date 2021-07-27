@@ -59,7 +59,7 @@ class App {
     return fetch(url, { method: 'GET' })
     .then(res => res.text())
     .then(res => res.replace(/[\s]+/g, ' ').trim())
-    .then(status => ({ updated: `${host}.${domain} - ${ip}`, status }))
+    .then(status => ({ updated: `${ip} - ${status} - ${host}.${domain}`, status }))
     .then(res => {
       logger.info(JSON.stringify(res));
       if (res.status === 'status=0 OK' || !retry) return res;
