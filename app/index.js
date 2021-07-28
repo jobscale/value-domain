@@ -22,7 +22,7 @@ class App {
     ];
     return this.allowInsecure()
     .then(() => fetch(...request))
-    .then(res => this.allowInsecure(false) || res)
+    .then(res => this.allowInsecure(false) && res)
     .then(res => res.json())
     .then(json => JSON.parse(
       Buffer.from(json.env.replace(...pattern), pattern[2]).toString(),
