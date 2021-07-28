@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node .",
     "inspect": "node --inspect-brk .",
-    "lint": "date +%s && eslint .",
-    "lint:fix": "date +%s && eslint . --fix",
+    "lint": "date +%s%3N && eslint .",
+    "lint:fix": "date +%s%3N && eslint . --fix",
     "test": "npm run lint"
   },
   "pre-commit": [
