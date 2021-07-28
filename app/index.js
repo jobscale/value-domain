@@ -47,8 +47,7 @@ class App {
     const { domain, token } = env;
     for (const host of env.hosts) {
       const params = { domain, token, host, ip, retry: 10 };
-      await this.waiter(1200)
-      .then(() => this.dynamic(params))
+      await this.dynamic(params)
       .catch(e => logger.error({ message: e.toString() }));
     }
     return 'OK';
@@ -58,12 +57,15 @@ class App {
     const url = `${this.url}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
     return fetch(url, { method: 'GET' })
     .then(res => res.text())
-    .then(res => res.replace(/[\s]+/g, ' ').trim())
-    .then(status => ({ updated: `${ip} - ${status} - ${host}.${domain}`, status }))
+    .then(text => {
+      const status = text.replace(/[\s]+/g, ' ').trim();
+      return { updated: `${ip} - ${status} - ${host}.${domain}`, status };
+    })
     .then(res => {
       logger.info(JSON.stringify(res));
       if (res.status === 'status=0 OK' || !retry) return res;
-      return this.dynamic({ domain, token, host, ip, retry: retry - 1 });
+      return this.waiter(2200)
+      .then(() => this.dynamic({ domain, token, host, ip, retry: retry - 1 }));
     });
   }
 
