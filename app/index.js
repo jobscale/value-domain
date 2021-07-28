@@ -1,24 +1,31 @@
 global.fetch = require('node-fetch');
 
-global.logger = console;
-const Cookie = 'X-AUTH=X0X0X0X0X0X0X0X';
-const Host = 'https://partner.credentials.svc.cluster.local';
+if (typeof logger === 'undefined') {
+  global.logger = console;
+  const { info } = logger;
+  logger.info = (...args) => info(Date.now(), ...args);
+}
 
 class App {
-  constructor() {
-    this.url = 'https://dyn.value-domain.com/cgi-bin/dyn.fcg';
+  async allowInsecure(use) {
+    if (use === false) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    else process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
 
   fetchEnv() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    const Host = 'https://partner.credentials.svc.cluster.local';
+    const Cookie = 'X-AUTH=X0X0X0X0X0X0X0X';
     const pattern = [/=/g, '', 'base64'];
-    return fetch(`${Host}/env.json`, {
-      method: 'GET',
-      headers: { Cookie },
-    })
+    const request = [
+      `${Host}/env.json`,
+      { method: 'GET', headers: { Cookie } },
+    ];
+    return this.allowInsecure()
+    .then(() => fetch(...request))
+    .then(res => this.allowInsecure(false) || res)
     .then(res => res.json())
-    .then(res => JSON.parse(
-      Buffer.from(res.env.replace(...pattern), pattern[2]).toString(),
+    .then(json => JSON.parse(
+      Buffer.from(json.env.replace(...pattern), pattern[2]).toString(),
     ).valueDomain);
   }
 
@@ -54,7 +61,8 @@ class App {
   }
 
   dynamic({ domain, token, host, ip, retry }) {
-    const url = `${this.url}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
+    const path = 'https://dyn.value-domain.com/cgi-bin/dyn.fcg';
+    const url = `${path}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
     return fetch(url, { method: 'GET' })
     .then(res => res.text())
     .then(text => {
