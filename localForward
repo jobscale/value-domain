@@ -6,7 +6,7 @@ portForward() {
   target_svc=partner
   target_port=443
   bind_addr=0.0.0.0
-  bind_port=3000
+  bind_port=3443
 
   node_port=$(kubectl get service -n ${target_ns} ${target_svc} -o=jsonpath="{.spec.ports[?(@.port==${target_port})].nodePort}")
   if [[ "$node_port" == "" ]]

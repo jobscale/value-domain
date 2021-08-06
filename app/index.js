@@ -1,10 +1,4 @@
-global.fetch = require('node-fetch');
-
-if (typeof logger === 'undefined') {
-  global.logger = console;
-  const { info } = logger;
-  logger.info = (...args) => info(Date.now(), ...args);
-}
+require('@jobscale/core');
 
 class App {
   async allowInsecure(use) {
@@ -15,31 +9,20 @@ class App {
   fetchEnv() {
     const Host = 'https://partner.credentials.svc.cluster.local';
     const Cookie = 'X-AUTH=X0X0X0X0X0X0X0X';
-    const pattern = [/=/g, '', 'base64'];
     const request = [
-      `${Host}/env.json`,
+      `${Host}/value-domain.env.json`,
       { method: 'GET', headers: { Cookie } },
     ];
     return this.allowInsecure()
     .then(() => fetch(...request))
     .then(res => this.allowInsecure(false) && res)
-    .then(res => res.json())
-    .then(json => JSON.parse(
-      Buffer.from(json.env.replace(...pattern), pattern[2]).toString(),
-    ).valueDomain);
+    .then(res => res.json());
   }
 
   fetchIP() {
     return fetch('https://inet-ip.info/ip')
     .then(res => res.text())
     .then(res => res.split('\n')[0]);
-  }
-
-  getData() {
-    return Promise.all([
-      this.fetchIP(),
-      this.fetchEnv(),
-    ]);
   }
 
   waiter(milliseconds) {
@@ -57,7 +40,7 @@ class App {
       await this.dynamic(params)
       .catch(e => logger.error({ message: e.toString() }));
     }
-    return 'OK';
+    return 'ok';
   }
 
   dynamic({ domain, token, host, ip, retry }) {
@@ -78,7 +61,7 @@ class App {
   }
 
   main() {
-    return this.getData()
+    return Promise.all([this.fetchIP(), this.fetchEnv()])
     .then(data => this.setAddress(...data));
   }
 

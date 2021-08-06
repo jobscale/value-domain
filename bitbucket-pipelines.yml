@@ -11,8 +11,12 @@ pipelines:
         services:
           - docker
         script: # Modify the commands below to build your repository.
+          - id
           - grep MH /proc/cpuinfo
-          - curl -o secret https://jsx.jp
+          - free -h
+          - df -h .
+          - dig jsx.jp
+          - echo $(curl https://inet-ip.info/ip)
           - git remote -v
           - git config -l
           - npm i

@@ -21,13 +21,13 @@ npm start
 ## build and run
 ```
 main() {
-  docker build . -t local/value-domain:0.0.1
-  docker run --rm -it local/value-domain:0.0.1
+  docker build . -t local/value-domain
+  docker run --rm -it local/value-domain
 } && main
 ```
 
 ### create cronjob
 ```
-kubectl create cronjob value-domain --image local/value-domain:0.0.1 --schedule '0/7 * * * *'
+kubectl create cronjob value-domain --image local/value-domain --schedule '0/7 * * * *'
 kubectl create job --from=cronjob/value-domain value-domain-manual-$(date +'%Y%m%d-%H%M')
 ```

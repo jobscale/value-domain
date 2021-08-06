@@ -1,21 +1,21 @@
 {
   "name": "value-domain",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "value-domain",
+  "author": "jobscale <jobscale@users.noreply.github.com>",
   "main": "app/index.js",
   "scripts": {
     "start": "node .",
     "inspect": "node --inspect-brk .",
     "lint": "date +%s%3N && eslint .",
-    "lint:fix": "date +%s%3N && eslint . --fix",
     "test": "npm run lint"
   },
   "pre-commit": [
     "lint"
   ],
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "@jobscale/core": "0.0.3"
   },
   "devDependencies": {
     "eslint": "^7.31.0",
@@ -23,7 +23,5 @@
     "eslint-plugin-import": "^2.23.4",
     "pre-commit": "^1.2.2"
   },
-  "keywords": [],
-  "author": "",
   "license": "MIT"
 }

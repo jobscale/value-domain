@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [12.x, 14.x, 16.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -17,11 +17,20 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: grep MH /proc/cpuinfo
-    - run: dig jsx.jp
-    - run: npm i
-    - run: npm run build --if-present
-    - run: npm run lint
-    - run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: System check
+      run: |
+        id
+        grep MH /proc/cpuinfo
+        free -h
+        df -h .
+        dig jsx.jp
+        echo $(curl https://inet-ip.info/ip)
+        git remote -v
+        git config -l
+    - name: Npm install, lint, test
+        npm i
+        npm run lint
+    - name: Docker build
+      run: docker build . -t my-image-name:$(date +%s%3N)
       env:
         CI: true
