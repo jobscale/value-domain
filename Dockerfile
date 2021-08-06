@@ -6,4 +6,5 @@ COPY app app
 RUN chown -R node. .
 USER node
 RUN npm i --production
+ENV TZ Asia/Tokyo
 CMD ["npm", "start"]
