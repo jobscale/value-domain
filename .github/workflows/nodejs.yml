@@ -28,6 +28,7 @@ jobs:
         git remote -v
         git config -l
     - name: Npm install, lint, test
+      run: |
         npm i
         npm run lint
     - name: Docker build
