@@ -66,6 +66,8 @@ class App {
   }
 
   start() {
+    const ts = new Date();
+    logger.info({ ts: ts.getTime(), now: ts.toLocaleString() });
     this.main()
     .catch(e => logger.error({ message: e.toString() }));
   }
