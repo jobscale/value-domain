@@ -1,7 +1,7 @@
 {
   "name": "value-domain",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "value-domain",
   "author": "jobscale <jobscale@users.noreply.github.com>",
   "main": "app/index.js",
@@ -15,12 +15,12 @@
     "lint"
   ],
   "dependencies": {
-    "@jobscale/core": "0.0.3"
+    "@jobscale/core": "0.0.4"
   },
   "devDependencies": {
-    "eslint": "^7.31.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.24.2",
     "pre-commit": "^1.2.2"
   },
   "license": "MIT"
