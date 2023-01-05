@@ -15,12 +15,12 @@
     "lint"
   ],
   "dependencies": {
-    "@jobscale/core": "0.0.4"
+    "@jobscale/logger": "^0.1.0"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "pre-commit": "^1.2.2"
   },
   "license": "MIT"

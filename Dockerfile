@@ -1,10 +1,9 @@
 FROM node:lts-bullseye-slim
 SHELL ["bash", "-c"]
 WORKDIR /home/node
-COPY package.json package.json
-COPY app app
-RUN chown -R node. .
+COPY --chown=node:staff package.json .
+COPY --chown=node:staff app app
 USER node
-RUN npm i --production
+RUN npm i --omit=dev
 ENV TZ Asia/Tokyo
 CMD ["npm", "start"]

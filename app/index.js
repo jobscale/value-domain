@@ -1,4 +1,4 @@
-require('@jobscale/core');
+const { logger } = require('@jobscale/logger');
 
 class App {
   async allowInsecure(use) {
@@ -27,7 +27,7 @@ class App {
 
   waiter(milliseconds) {
     const prom = {};
-    prom.pending = new Promise((...args) => [prom.resolve, prom.reject] = args);
+    prom.pending = new Promise((...args) => { [prom.resolve, prom.reject] = args; });
     setTimeout(prom.resolve, milliseconds);
     return prom.pending;
   }
