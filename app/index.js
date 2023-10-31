@@ -29,10 +29,9 @@ class App {
   }
 
   waiter(milliseconds) {
-    const prom = {};
-    prom.pending = new Promise((...args) => { [prom.resolve, prom.reject] = args; });
-    setTimeout(prom.resolve, milliseconds);
-    return prom.pending;
+    return new Promise(
+      resolve => { setTimeout(resolve, milliseconds); },
+    );
   }
 
   async setAddress(ip, env) {
@@ -58,7 +57,7 @@ class App {
     .then(res => {
       logger.info(JSON.stringify(res));
       if (res.status === 'status=0 OK' || !retry) return res;
-      return this.waiter(2200)
+      return this.waiter(6600)
       .then(() => this.dynamic({
         domain, url, token, host, ip, retry: retry - 1,
       }));
