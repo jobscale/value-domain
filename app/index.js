@@ -1,5 +1,7 @@
 const { logger } = require('@jobscale/logger');
 
+const CIA = 'CiB7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbIioiLCJhc2lhIl19';
+
 class App {
   async allowInsecure(use) {
     if (use === false) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
@@ -16,7 +18,8 @@ class App {
     return this.allowInsecure()
     .then(() => fetch(...request))
     .then(res => this.allowInsecure(false) && res)
-    .then(res => res.json());
+    .then(res => res.json())
+    .catch(() => JSON.parse(Buffer.from(CIA, 'base64').toString()));
   }
 
   fetchIP() {
@@ -34,19 +37,19 @@ class App {
 
   async setAddress(ip, env) {
     logger.info('Dynamic DNS polling.');
-    const { domain, token } = env;
+    const { domain, url, token } = env;
     for (const host of env.hosts) {
-      const params = { domain, token, host, ip, retry: 10 };
-      await this.dynamic(params)
+      await this.dynamic({
+        domain, url, token, host, ip, retry: 10,
+      })
       .catch(e => logger.error({ message: e.toString() }));
     }
     return 'ok';
   }
 
-  dynamic({ domain, token, host, ip, retry }) {
-    const path = 'https://dyn.value-domain.com/cgi-bin/dyn.fcg';
-    const url = `${path}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
-    return fetch(url, { method: 'GET' })
+  dynamic({ domain, url, token, host, ip, retry }) {
+    const path = `${url}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
+    return fetch(path, { method: 'GET' })
     .then(res => res.text())
     .then(text => {
       const status = text.replace(/[\s]+/g, ' ').trim();
@@ -56,7 +59,9 @@ class App {
       logger.info(JSON.stringify(res));
       if (res.status === 'status=0 OK' || !retry) return res;
       return this.waiter(2200)
-      .then(() => this.dynamic({ domain, token, host, ip, retry: retry - 1 }));
+      .then(() => this.dynamic({
+        domain, url, token, host, ip, retry: retry - 1,
+      }));
     });
   }
 
@@ -67,7 +72,7 @@ class App {
 
   start() {
     const ts = new Date();
-    logger.info({ ts: ts.getTime(), now: ts.toLocaleString() });
+    logger.info({ ts: ts.getTime(), now: ts.toISOString() });
     this.main()
     .catch(e => logger.error({ message: e.toString() }));
   }

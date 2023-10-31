@@ -17,8 +17,8 @@ module.exports = {
     indent: ['error', 2, { MemberExpression: 0 }],
     'no-trailing-spaces': 'error',
     'object-curly-newline': ['error', {
-      ObjectExpression: { minProperties: 6, multiline: true, consistent: true },
-      ObjectPattern: { minProperties: 6, multiline: true, consistent: true },
+      ObjectExpression: { minProperties: 7, multiline: true, consistent: true },
+      ObjectPattern: { minProperties: 7, multiline: true, consistent: true },
     }],
     'arrow-parens': 'off',
     'no-return-assign': 'off',
