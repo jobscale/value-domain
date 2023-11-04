@@ -1,6 +1,11 @@
 const { logger } = require('@jobscale/logger');
 
-const CIA = 'CiB7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbIioiLCJhc2lhIl19';
+const { ENV } = process.env.ENV;
+
+const CIA = {
+  dev: 'CiB7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbIioiLCJhc2lhIl19',
+  prod: 'IAp7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbInVzIl19',
+}[ENV] || {};
 
 class App {
   async allowInsecure(use) {
@@ -35,11 +40,11 @@ class App {
   }
 
   async setAddress(ip, env) {
-    logger.info('Dynamic DNS polling.');
+    logger.info(`Dynamic DNS polling. - ${ENV}`);
     const { domain, url, token } = env;
     for (const host of env.hosts) {
       await this.dynamic({
-        domain, url, token, host, ip, retry: 10,
+        domain, url, token, host, ip, retry: 3,
       })
       .catch(e => logger.error({ message: e.toString() }));
     }
