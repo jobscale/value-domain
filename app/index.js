@@ -1,6 +1,6 @@
 const { logger } = require('@jobscale/logger');
 
-const { ENV } = process.env.ENV;
+const { ENV } = process.env;
 
 const CIA = {
   dev: 'CiB7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbIioiLCJhc2lhIl19',
