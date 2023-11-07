@@ -3,7 +3,7 @@ const { logger } = require('@jobscale/logger');
 const { ENV } = process.env;
 
 const CIA = {
-  dev: 'CiB7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbIioiLCJhc2lhIl19',
+  dev: 'ICAKeyJkb21haW4iOiJqc3guanAiLCJ1cmwiOiJodHRwczovL2R5bi52YWx1ZS1kb21haW4uY29tL2NnaS1iaW4vZHluLmZjZyIsInRva2VuIjoib21vaWNvbWkiLCJob3N0cyI6WyJhc2lhIl19',
   prod: 'IAp7ImRvbWFpbiI6ImpzeC5qcCIsInVybCI6Imh0dHBzOi8vZHluLnZhbHVlLWRvbWFpbi5jb20vY2dpLWJpbi9keW4uZmNnIiwidG9rZW4iOiJvbW9pY29taSIsImhvc3RzIjpbInVzIl19',
 }[ENV] || {};
 
