@@ -2,7 +2,7 @@
 
 ## run with container
 ```
-git clone https://github.com/jobscale/value-domain.git
+git clone git@github.com:jobscale/value-domain.git
 cd value-domain
 ```
 
