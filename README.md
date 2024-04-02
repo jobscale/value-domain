@@ -14,7 +14,7 @@ echo "module.exports = {
   hosts: ['@', '*'],
 };" > app/.env.js
 npm i
-npm run lint
+npm run lint --if-present
 npm start
 ```
 
