@@ -8,7 +8,7 @@ cd value-domain
 
 ## setup and test
 ```bash
-echo "module.exports = {
+echo "export default {
   domain: 'example.com',
   token: 'secret',
   hosts: ['@', '*'],
@@ -29,5 +29,5 @@ main() {
 ### create cronjob
 ```
 kubectl create cronjob value-domain --image local/value-domain --schedule '0/7 * * * *'
-kubectl create job --from=cronjob/value-domain value-domain-manual-$(date +'%Y%m%d-%H%M')
+kubectl create job --from=cronjob/value-domain value-domain-manual-$(date +'%s')
 ```

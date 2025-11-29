@@ -1,4 +1,4 @@
-const { logger } = require('@jobscale/logger');
+import { logger } from '@jobscale/logger';
 
 const { ENV } = process.env;
 
@@ -51,7 +51,9 @@ class App {
     return 'ok';
   }
 
-  dynamic({ domain, url, token, host, ip, retry }) {
+  dynamic({
+    domain, url, token, host, ip, retry,
+  }) {
     const path = `${url}?d=${domain}&p=${token}&h=${host}&i=${ip}`;
     return fetch(path, { method: 'GET' })
     .then(res => res.text())
