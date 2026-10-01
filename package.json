@@ -1,7 +1,7 @@
 {
-  "name": "value-domain",
   "private": true,
-  "version": "0.1.1",
+  "name": "value-domain",
+  "version": "0.1.2",
   "description": "value-domain",
   "author": "jobscale <jobscale@users.noreply.github.com>",
   "license": "MIT",
@@ -11,16 +11,17 @@
     "start": "node app/index.js",
     "pretest": "date -Iseconds",
     "lint": "eslint",
-    "test": "npm run lint"
+    "posttest": "npm run lint",
+    "test": "echo test"
   },
   "pre-commit": "test",
   "dependencies": {
-    "@jobscale/logger": "^0.10.1"
+    "@jobscale/create-logger": "^1.0.5"
   },
   "devDependencies": {
-    "@jobscale/eslint-plugin-standard": "^0.0.8",
-    "eslint": "^9.39.1",
-    "eslint-plugin-jest": "^29.2.1",
-    "pre-commit": "^1.2.2"
+    "@jobscale/eslint-plugin-standard": "^0.1.4",
+    "eslint": "^10.11.0",
+    "eslint-plugin-jest": "^29.16.6",
+    "pre-commit": "^2.0.0"
   }
 }
